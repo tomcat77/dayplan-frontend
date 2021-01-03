@@ -8,13 +8,15 @@ export interface State {
   weather: string;
   location: string;
   loadingWeather: boolean;
+  lastUpdated: Date;
 }
 
 export const initialState: State = {
   currentDate: new Date(),
   weather: 'Unknown weather',
-  location: 'Unknown location',
-  loadingWeather: false
+  location: 'Moscow',
+  loadingWeather: false,
+  lastUpdated: null
 }
 
 export const reducer = createReducer(
@@ -24,7 +26,12 @@ export const reducer = createReducer(
     (state) => { return { ...state, loadingWeather: true } }),
   on(
     WeatherActions.loadWeatherSuccess,
-    (state, payload: { forecast: string }) => {
-      return { ...state, weather: payload.forecast, loadingWeather: false }
+    (state, payload: { currentTemperature: number, weatherConditions: string }) => {
+      return { 
+        ...state, 
+        weather: `Current temperature: ${payload.currentTemperature}, conditions: ${payload.weatherConditions}`, 
+        loadingWeather: false,
+        lastUpdated: new Date()
+      };
     })
 );
