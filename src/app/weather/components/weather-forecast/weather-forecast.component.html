@@ -1,6 +1,12 @@
-<p-card header="Location for weather">
-    Weather forecast
+<p-card header="{{location$ | async}}">
+
+    <p>{{weather$ | async}}</p>
+
+    <ng-template *ngIf="loading$ | async"> <!-- TODO does not work with delay in service -->
+        <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+    </ng-template>
+
     <ng-template pTemplate="footer">
-        <p-button label="Refresh" icon="pi pi-refresh"></p-button>
+        <p-button label="Refresh" icon="pi pi-refresh" (onClick)="refreshWeather()"></p-button>
     </ng-template>
 </p-card>

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class HttpWeatherService {
       {
         responseType: 'json',
         observe: 'body'
-      });
+      }).pipe(delay(3000)); // FIXME remove, for debug only
   }
 }
 
