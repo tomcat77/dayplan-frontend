@@ -23,15 +23,31 @@ export const reducer = createReducer(
   initialState,
   on(
     WeatherActions.loadWeather,
-    (state) => { return { ...state, loadingWeather: true } }),
+    (state, payload: { location: string }) => {
+      return {
+        ...state,
+        location: payload.location,
+        loadingWeather: true
+      }
+    }),
   on(
     WeatherActions.loadWeatherSuccess,
     (state, payload: { currentTemperature: number, weatherConditions: string }) => {
-      return { 
-        ...state, 
-        weather: `Current temperature: ${payload.currentTemperature}, conditions: ${payload.weatherConditions}`, 
+      return {
+        ...state,
+        weather: `Current temperature: ${payload.currentTemperature}, conditions: ${payload.weatherConditions}`,
         loadingWeather: false,
         lastUpdated: new Date()
       };
+    }),
+  on(
+    WeatherActions.loadWeatherFailure,
+    (state, payload: {error: string}) => {
+      return {
+        ...state,
+        weather: `Failed to update: ${payload.error}`,
+        loadingWeather: false,
+        lastUpdated: new Date()
+      }
     })
 );

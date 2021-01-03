@@ -11,8 +11,8 @@ export class HttpWeatherService {
 
   constructor(private http: HttpClient) { }
 
-  public loadCurrentWeather(location: string): Observable<WeatherHttpResponse> {
-    return this.http.get<WeatherHttpResponse>(
+  public loadCurrentWeather(location: string): Observable<HttpWeatherResponse> {
+    return this.http.get<HttpWeatherResponse>(
       `http://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${this.API_KEY}&lang=ru&units=metric`,
       {
         responseType: 'json',
@@ -21,7 +21,7 @@ export class HttpWeatherService {
   }
 }
 
-export interface WeatherHttpResponse {
+export interface HttpWeatherResponse {
   weather: [
     {
       description: string
