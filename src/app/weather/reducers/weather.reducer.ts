@@ -6,12 +6,14 @@ export const featureKey = 'weather';
 export interface State {
   currentDate: Date;
   weather: string;
+  location: string;
   loadingWeather: boolean;
 }
 
 export const initialState: State = {
   currentDate: new Date(),
-  weather: 'Unknown',
+  weather: 'Unknown weather',
+  location: 'Unknown location',
   loadingWeather: false
 }
 
