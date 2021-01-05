@@ -9,14 +9,19 @@ import { metaReducers, ROOT_REDUCERS } from '.';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { WeatherForecastComponent } from './weather/components/weather-forecast/weather-forecast.component';
+import { NoteListComponent } from './note/components/note-list/note-list.component';
 import { CardModule } from 'primeng/card';
 import { ButtonModule } from 'primeng/button';
 import { WeatherEffects } from './weather/effects/weather.effects';
+import * as fromNote from './note/state/note.reducer';
+import { NoteEffects } from './note/state/note.effects';
+import { NoteService } from './note/services/note.service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    WeatherForecastComponent
+    WeatherForecastComponent,
+    NoteListComponent
   ],
   imports: [
     BrowserModule,
@@ -26,9 +31,11 @@ import { WeatherEffects } from './weather/effects/weather.effects';
     EffectsModule.forRoot([WeatherEffects]),
     CardModule,
     ButtonModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    StoreModule.forFeature(fromNote.noteFeatureKey, fromNote.reducer),
+    EffectsModule.forFeature([NoteEffects])
   ],
-  providers: [],
+  providers: [NoteService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
